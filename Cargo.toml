@@ -1,0 +1,8 @@
+[package]
+name = "nfc-jukebox"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rusb = "0.9"
+nfc = "0.1.11"
