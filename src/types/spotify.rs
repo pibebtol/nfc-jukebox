@@ -8,6 +8,10 @@ pub enum SpotifyControlKind {
     Shuffle,    // spotify_player playback shuffle
     VolumeUp,   // {spotify_player get key playback}.device.volume_percent > spotify_player playback volume (<volume>+5)
     VolumeDown, // {spotify_player get key playback}.device.volume_percent > spotify_player playback volume (<volume>-5)
+    RandomAnything,
+    RandomAlbum,
+    RandomArtist,
+    RandomPlaylist,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -15,6 +19,4 @@ pub enum SpotifyKind {
     Album,
     Artist,
     Playlist,
-    Control,
-    NotSet,
 }

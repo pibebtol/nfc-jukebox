@@ -1,6 +1,8 @@
 use std::process::Command;
 
-use crate::{data_control::file_reader::FileDataProvider, types::{data_provider::DataProvider, spotify::{SpotifyControlKind, SpotifyKind}}};
+use rand::{seq::SliceRandom, Rng};
+
+use crate::{data_control::file_reader::FileDataProvider, types::{data_provider::DataProvider, spotify::{self, SpotifyControlKind, SpotifyKind}}};
 
 #[derive(Clone)]
 pub struct PlayerControl {
@@ -32,7 +34,38 @@ impl PlayerControl {
             SpotifyControlKind::Shuffle => self.execute_control_command("shuffle".to_string()),
             SpotifyControlKind::VolumeUp => self.volume_up(),
             SpotifyControlKind::VolumeDown => self.volume_down(),
+            SpotifyControlKind::RandomAnything => self.play_random_anything(),
+            SpotifyControlKind::RandomAlbum => self.play_random_album(),
+            SpotifyControlKind::RandomArtist => self.play_random_artist(),
+            SpotifyControlKind::RandomPlaylist => self.play_random_playlist(),
         }
+    }
+
+    fn play_random_anything(&self) {
+        let mut rng = rand::thread_rng();
+        match rng.gen_range(0..=2) {
+            0 => self.play_random_album(),
+            1 => self.play_random_artist(),
+            _ => self.play_random_playlist(),
+        }
+    }
+
+    fn play_random_album(&self) {
+        let albums = self.data.get_spotify_albums();
+        let random_album = albums.choose(&mut rand::thread_rng()).unwrap();
+        self.play_album(&random_album["id"].as_str().unwrap().to_string());
+    }
+
+    fn play_random_artist(&self) {
+        let artists = self.data.get_spotify_artists();
+        let random_artist = artists.choose(&mut rand::thread_rng()).unwrap();
+        self.play_artist(&random_artist["id"].as_str().unwrap().to_string());
+    }
+
+    fn play_random_playlist(&self) {
+        let playlists = self.data.get_spotify_playlists();
+        let random_playlist = playlists.choose(&mut rand::thread_rng()).unwrap();
+        self.play_playlist(&random_playlist["id"].as_str().unwrap().to_string());
     }
 
     fn execute_control_command(&self, control: String) {

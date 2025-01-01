@@ -18,20 +18,26 @@ impl DataProvider for FileDataProvider {
     }
 
     fn get_spotify_mappings(&self) -> Vec<SpotifyMapping> {
-        let result2 = fs::read_to_string(&self.env.spotify_mappings_path).expect("should have been able to read file");
+        let result = fs::read_to_string(&self.env.spotify_mappings_path).expect("should have been able to read file");
 
-        serde_json::from_str(&result2).expect("should have been valid json")
+        serde_json::from_str(&result).expect("should have been valid json")
     }
     
     fn get_spotify_albums(&self) -> Vec<Value> {
-        todo!()
+        let result = fs::read_to_string(&self.env.albums).expect("should have been able to read file");
+
+        serde_json::from_str(&result).expect("should have been valid json")
     }
     
     fn get_spotify_artists(&self) -> Vec<Value> {
-        todo!()
+        let result = fs::read_to_string(&self.env.artists).expect("should have been able to read file");
+
+        serde_json::from_str(&result).expect("should have been valid json")
     }
     
     fn get_spotify_playlists(&self) -> Vec<Value> {
-        todo!()
+        let result = fs::read_to_string(&self.env.playlists).expect("should have been able to read file");
+
+        serde_json::from_str(&result).expect("should have been valid json")
     }
 }

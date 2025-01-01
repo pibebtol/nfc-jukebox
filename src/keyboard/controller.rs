@@ -1,3 +1,5 @@
+use std::iter::Zip;
+
 use crossterm::event::{read, Event, KeyCode, KeyEvent};
 
 use crate::{spotify_player::player::PlayerControl, types::spotify::SpotifyControlKind};
@@ -28,10 +30,14 @@ impl Controller {
         match code {
             '0' => self.player.control_playback(SpotifyControlKind::VolumeDown),
             '1' => self.player.control_playback(SpotifyControlKind::VolumeUp),
+            '3' => self.player.control_playback(SpotifyControlKind::RandomAlbum),
             '4' => self.player.control_playback(SpotifyControlKind::Previous),
             '5' => self.player.control_playback(SpotifyControlKind::Shuffle),
+            '7' => self.player.control_playback(SpotifyControlKind::RandomArtist),
             '8' => self.player.control_playback(SpotifyControlKind::PlayPause),
+            'z' => self.player.control_playback(SpotifyControlKind::RandomPlaylist),
             'ä' => self.player.control_playback(SpotifyControlKind::Next),
+            'e' => self.player.control_playback(SpotifyControlKind::RandomAnything),
             _ => (),
         }
     }
