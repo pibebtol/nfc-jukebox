@@ -4,6 +4,7 @@ use crate::types::data_provider::DataProvider;
 mod types;
 mod env;
 mod data_control;
+mod spotify_player;
 
 fn main() {
     let env = env::environment::Environment::new(".env");
@@ -14,17 +15,8 @@ fn main() {
     let spotify_mappings = data.get_spotify_mappings();
     println!("got spotify mappings: {:?}", spotify_mappings[0]);
 
-    // let result = fs::read_to_string(env.nfc_mappings_path).expect("should have been able to read file");
-    // println!("got result: {result}");
-
-    // let nfc_mappings: Vec<NfcMapping> = serde_json::from_str(&result).expect("should have been valid json");
-    // println!("got json: {:?}", nfc_mappings[0]);
-
-    // let result2 = fs::read_to_string(env.spotify_mappings_path).expect("should have been able to read file");
-    // println!("got result: {result2}");
-
-    // let spotify_mappings: Vec<SpotifyMapping> = serde_json::from_str(&result2).expect("should have been valid json");
-    // println!("got json: {:?}", spotify_mappings[0]);
+    let player = spotify_player::player::Player::new();
+    player.play();
 }
 
 // use nfc::{Nfc, NfcError};
