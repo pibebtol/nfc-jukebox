@@ -1,5 +1,3 @@
-use std::iter::Zip;
-
 use crossterm::event::{read, Event, KeyCode, KeyEvent};
 
 use crate::{spotify_player::player::PlayerControl, types::spotify::SpotifyControlKind};

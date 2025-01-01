@@ -2,7 +2,7 @@ use std::process::Command;
 
 use rand::{seq::SliceRandom, Rng};
 
-use crate::{data_control::file_reader::FileDataProvider, types::{data_provider::DataProvider, spotify::{self, SpotifyControlKind, SpotifyKind}}};
+use crate::{data_control::file_reader::FileDataProvider, types::{data_provider::DataProvider, spotify::{SpotifyControlKind, SpotifyKind}}};
 
 #[derive(Clone)]
 pub struct PlayerControl {
@@ -21,7 +21,6 @@ impl PlayerControl {
             SpotifyKind::Album => self.play_album(&spotify_mapping.spotify_id),
             SpotifyKind::Artist => self.play_artist(&spotify_mapping.spotify_id),
             SpotifyKind::Playlist => self.play_playlist(&spotify_mapping.spotify_id),
-            _ => (),
         }
 
     }
