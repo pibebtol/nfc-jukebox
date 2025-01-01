@@ -1,3 +1,4 @@
+#![allow(dead_code,unused_variables)]
 use types::mappings::{NfcMapping, SpotifyMapping};
 use crate::types::data_provider::DataProvider;
 
@@ -15,8 +16,7 @@ fn main() {
     let spotify_mappings = data.get_spotify_mappings();
     println!("got spotify mappings: {:?}", spotify_mappings[0]);
 
-    let player = spotify_player::player::Player::new();
-    player.play();
+    let player = spotify_player::player::PlayerControl::new();
 }
 
 // use nfc::{Nfc, NfcError};
