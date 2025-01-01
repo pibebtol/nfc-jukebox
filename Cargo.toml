@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 rusb = "0.9"
 nfc = "0.1.11"
+crossterm = "0.28.1"
 serde = { version = "1.0.210", features = ["derive"] }
 serde_json = "1.0.134"
 dotenvy = { git = "https://github.com/allan2/dotenvy.git", branch = "master" }

@@ -34,8 +34,12 @@ impl PlayerControl {
     }
 
     pub fn volume_down(&self) {
-        let vol = Self::get_current_volume() - 5;
-        Self::set_volume(vol);
+        let vol = Self::get_current_volume();
+        if vol < 5 {
+            Self::set_volume(0);
+        } else {
+            Self::set_volume(vol - 5);
+        }
     }
 
     fn set_volume(new_volume: u64) {

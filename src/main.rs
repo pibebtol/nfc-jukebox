@@ -6,6 +6,7 @@ mod types;
 mod env;
 mod data_control;
 mod spotify_player;
+mod keyboard;
 
 fn main() {
     let env = env::environment::Environment::new(".env");
@@ -16,7 +17,9 @@ fn main() {
     let spotify_mappings = data.get_spotify_mappings();
     println!("got spotify mappings: {:?}", spotify_mappings[0]);
 
-    let player = spotify_player::player::PlayerControl::new();
+    let player: spotify_player::player::PlayerControl = spotify_player::player::PlayerControl::new();
+    let controller = keyboard::controller::Controller::new(player);
+    controller.listen_for_key_input();
 }
 
 // use nfc::{Nfc, NfcError};
