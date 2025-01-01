@@ -1,21 +1,50 @@
-use nfc::{Nfc, NfcError};
+use types::mappings::{NfcMapping, SpotifyMapping};
+use crate::types::data_provider::DataProvider;
 
-fn main() -> Result<(), NfcError> {
-    // Initialize NFC
-    let mut nfc = Nfc::new()?;
+mod types;
+mod env;
+mod data_control;
 
-    // Open the NFC device
-    let device = nfc.open()?;
+fn main() {
+    let env = env::environment::Environment::new(".env");
+    let data = data_control::file_reader::FileDataProvider::new(env);
+    let nfc_mappings = data.get_nfc_mappings();
+    println!("got nfc_mappings: {:?}", nfc_mappings[0]);
 
-    // Wait for a tag to be present
-    println!("Place an NFC tag on the reader...");
-    let tag = device.wait_for_tag()?;
+    let spotify_mappings = data.get_spotify_mappings();
+    println!("got spotify mappings: {:?}", spotify_mappings[0]);
 
-    // Read the UID of the tag
-    println!("Tag UID: {:?}", tag.uid());
+    // let result = fs::read_to_string(env.nfc_mappings_path).expect("should have been able to read file");
+    // println!("got result: {result}");
 
-    Ok(())
+    // let nfc_mappings: Vec<NfcMapping> = serde_json::from_str(&result).expect("should have been valid json");
+    // println!("got json: {:?}", nfc_mappings[0]);
+
+    // let result2 = fs::read_to_string(env.spotify_mappings_path).expect("should have been able to read file");
+    // println!("got result: {result2}");
+
+    // let spotify_mappings: Vec<SpotifyMapping> = serde_json::from_str(&result2).expect("should have been valid json");
+    // println!("got json: {:?}", spotify_mappings[0]);
 }
+
+// use nfc::{Nfc, NfcError};
+
+// fn main() -> Result<(), NfcError> {
+//     // Initialize NFC
+//     let mut nfc = Nfc::new()?;
+
+//     // Open the NFC device
+//     let device = nfc.open()?;
+
+//     // Wait for a tag to be present
+//     println!("Place an NFC tag on the reader...");
+//     let tag = device.wait_for_tag()?;
+
+//     // Read the UID of the tag
+//     println!("Tag UID: {:?}", tag.uid());
+
+//     Ok(())
+// }
 
 // use rusb::{Context, Device, DeviceHandle, UsbContext, Error};
 // use std::{os::unix::process, process::Command, usize};
