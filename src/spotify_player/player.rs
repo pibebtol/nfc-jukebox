@@ -1,6 +1,6 @@
 use std::process::Command;
 
-use crate::{data_control::file_reader::FileDataProvider, types::{data_provider::DataProvider, spotify}};
+use crate::{data_control::file_reader::FileDataProvider, types::{data_provider::DataProvider, spotify::{self, SpotifyControlKind}}};
 
 #[derive(Clone)]
 pub struct PlayerControl {
@@ -9,7 +9,6 @@ pub struct PlayerControl {
 
 impl PlayerControl {
     pub fn play(&self, nfc_id: &str) {
-        println!("{nfc_id}");
         let nfc_mappings = self.data.get_nfc_mappings();
         let nfc_index = nfc_mappings.iter().find(|&mapping| mapping.nfc_id == nfc_id).unwrap().index; 
 
@@ -25,17 +24,37 @@ impl PlayerControl {
 
     }
 
-    pub fn volume_up(&self) {
-        let vol = Self::get_current_volume() + 5;
-        Self::set_volume(vol);
+    pub fn control_playback(&self, control_kind: SpotifyControlKind) {
+        match control_kind {
+            SpotifyControlKind::PlayPause => self.execute_control_command("play-pause".to_string()),
+            SpotifyControlKind::Next => self.execute_control_command("next".to_string()),
+            SpotifyControlKind::Previous => self.execute_control_command("previous".to_string()),
+            SpotifyControlKind::Shuffle => self.execute_control_command("shuffle".to_string()),
+            SpotifyControlKind::VolumeUp => self.volume_up(),
+            SpotifyControlKind::VolumeDown => self.volume_down(),
+            _ => (),
+        }
     }
 
-    pub fn volume_down(&self) {
-        let vol = Self::get_current_volume();
+    fn execute_control_command(&self, control: String) {
+        Command::new("spotify_player")
+            .arg("playback")
+            .arg(control)
+            .output()
+            .expect("Failed to execute command");
+    }
+
+    fn volume_up(&self) {
+        let vol = self.get_current_volume() + 5;
+        self.set_volume(vol);
+    }
+
+    fn volume_down(&self) {
+        let vol = self.get_current_volume();
         if vol < 5 {
-            Self::set_volume(0);
+            self.set_volume(0);
         } else {
-            Self::set_volume(vol - 5);
+            self.set_volume(vol - 5);
         }
     }
 
@@ -63,7 +82,7 @@ impl PlayerControl {
             .expect("Failed to execute command");
     }
 
-    fn set_volume(new_volume: u64) {
+    fn set_volume(&self, new_volume: u64) {
         Command::new("spotify_player")
             .arg("playback")
             .arg("volume")
@@ -72,7 +91,7 @@ impl PlayerControl {
             .expect("Failed to execute command");
     }
 
-    fn get_current_volume() -> u64 {
+    fn get_current_volume(&self) -> u64 {
         let output = Command::new("spotify_player")
             .arg("get")
             .arg("key")

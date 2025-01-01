@@ -13,11 +13,15 @@
 - [ ] control spotify-player
     - [x] volume
     - [x] play tags
-    - [ ] control
+    - [x] control
     - [ ] play random stuff
 - [x] nfc control
 - [ ] keyboard input
 - [ ] figure out deployment
+- [ ] general control
+  - [ ] restart spotify player
+  - [ ] check network?
+  - [ ] shut down?
 
 ## spotify_player
 
