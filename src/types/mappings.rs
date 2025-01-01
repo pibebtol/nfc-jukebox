@@ -1,23 +1,15 @@
 use serde::{Deserialize, Serialize};
+use super::spotify::SpotifyKind;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct NfcMapping {
-    index: u32,
-    nfc_id: String,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-pub enum SpotifyKind {
-    Album,
-    Artist,
-    Playlist,
-    Control,
-    NotSet,
+    pub index: u32,
+    pub nfc_id: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct SpotifyMapping {
-    nfc_index: u32,
-    spotify_id: String,
-    spotify_kind: SpotifyKind,
+    pub nfc_index: u32,
+    pub spotify_id: String,
+    pub spotify_kind: SpotifyKind,
 }

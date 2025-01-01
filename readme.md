@@ -2,18 +2,20 @@
 
 ## ToDo
 ### base
-- [ ] logging
 - [x] read mappings
 - [x] execute command line stuff
 - [x] get nfc-reader input
 - [x] get keyboard input
-- [ ] threading
+- [x] threading
 
 ### proper
+- [ ] logging
 - [ ] control spotify-player
     - [x] volume
-    - [ ]
-- [ ] nfc control
+    - [x] play tags
+    - [ ] control
+    - [ ] play random stuff
+- [x] nfc control
 - [ ] keyboard input
 - [ ] figure out deployment
 

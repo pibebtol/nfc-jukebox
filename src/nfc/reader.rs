@@ -1,10 +1,13 @@
 use std::{
     io::{BufRead, BufReader},
     process::{Command, Stdio},
-    thread,
 };
 
-pub struct Controller {}
+use crate::spotify_player::player::PlayerControl;
+
+pub struct Controller {
+    pub player: PlayerControl,
+}
 
 impl Controller {
     pub fn listen_for_nfc_tags(&self) {
@@ -19,21 +22,21 @@ impl Controller {
 
             let stdout = child.stdout.take().expect("Failed to open stdout");
 
-            let reader_thread = thread::spawn(move || {
-                let reader = BufReader::new(stdout);
-                for line in reader.lines() {
-                    match line {
-                        Ok(line) => {
-                            println!("Output: {}", line);
-                        }
-                        Err(e) => {
-                            eprintln!("Error reading line: {}", e);
+            let reader = BufReader::new(stdout);
+            for line in reader.lines() {
+                match line {
+                    Ok(line) => {
+                        if line.contains("NFCID1") {
+                            // only take the nfc-id
+                            let nfc_id = &line[21..47];
+                            self.player.play(nfc_id);
                         }
                     }
+                    Err(e) => {
+                        eprintln!("Error reading line: {}", e);
+                    }
                 }
-            });
-
-            reader_thread.join().expect("Reader thread panicked");
+            }
 
             // wait for nfc-poll to finish
             let _ = child.wait().unwrap();

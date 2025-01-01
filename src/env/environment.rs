@@ -6,6 +6,7 @@ static SPOTIFY_ALBUMS_PATH: &str = "SPOTIFY_ALBUMS_PATH";
 static SPOTIFY_ARTISTS_PATH: &str = "SPOTIFY_ARTISTS_PATH";
 static SPOTIFY_PLAYLISTS_PATH: &str = "SPOTIFY_PLAYLISTS_PATH";
 
+#[derive(Clone)]
 pub struct Environment {
     pub nfc_mappings_path: String,
     pub spotify_mappings_path: String,

@@ -3,14 +3,9 @@ use crate::types::mappings::{NfcMapping, SpotifyMapping};
 use crate::types::data_provider::DataProvider;
 use crate::env::environment::Environment;
 
+#[derive(Clone)]
 pub struct FileDataProvider {
-    env: Environment,
-}
-
-impl FileDataProvider {
-    pub fn new(env: Environment) -> FileDataProvider {
-        FileDataProvider { env }
-    }
+    pub env: Environment,
 }
 
 impl DataProvider for FileDataProvider {
@@ -24,5 +19,17 @@ impl DataProvider for FileDataProvider {
         let result2 = fs::read_to_string(&self.env.spotify_mappings_path).expect("should have been able to read file");
 
         serde_json::from_str(&result2).expect("should have been valid json")
+    }
+    
+    fn get_spotify_albums(&self) -> Vec<serde_json::Value> {
+        todo!()
+    }
+    
+    fn get_spotify_artists(&self) -> Vec<serde_json::Value> {
+        todo!()
+    }
+    
+    fn get_spotify_playlists(&self) -> Vec<serde_json::Value> {
+        todo!()
     }
 }
