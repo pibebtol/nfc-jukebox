@@ -5,7 +5,7 @@
 - [ ] logging
 - [x] read mappings
 - [x] execute command line stuff
-- [ ] get nfc-reader input
+- [x] get nfc-reader input
 - [x] get keyboard input
 - [ ] threading
 
