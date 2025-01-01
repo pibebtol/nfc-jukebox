@@ -1,5 +1,11 @@
 use std::thread;
 
+use data_control::file_reader::FileDataProvider;
+use env::environment::Environment;
+use keyboard::controller::Controller;
+use nfc::reader::Reader;
+use spotify_player::player::PlayerControl;
+
 mod types;
 mod env;
 mod data_control;
@@ -10,17 +16,17 @@ mod nfc;
 static ENV: &str = ".env";
 
 fn main() {
-    let env = env::environment::Environment::new(ENV);
-    let data = data_control::file_reader::FileDataProvider{ env };
+    let env = Environment::new(ENV);
+    let data = FileDataProvider{ env };
 
-    let player: spotify_player::player::PlayerControl = spotify_player::player::PlayerControl{data};
+    let player = PlayerControl{data};
 
-    let controller = keyboard::controller::Controller::new(player.clone());
+    let controller = Controller::new(player.clone());
     let keyboard_thread = thread::spawn(move || {
         controller.listen_for_key_input();
     });
 
-    let nfc_controller = nfc::reader::Controller { player };
+    let nfc_controller = Reader { player };
     let nfc_reader_thread = thread::spawn(move || {
         nfc_controller.listen_for_nfc_tags();
     });

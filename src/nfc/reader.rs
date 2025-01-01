@@ -5,11 +5,11 @@ use std::{
 
 use crate::spotify_player::player::PlayerControl;
 
-pub struct Controller {
+pub struct Reader {
     pub player: PlayerControl,
 }
 
-impl Controller {
+impl Reader {
     pub fn listen_for_nfc_tags(&self) {
         loop {
             // wraps nfc-poll into stdbuf, to get the buffer output instantly

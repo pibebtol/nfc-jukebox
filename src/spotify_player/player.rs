@@ -1,6 +1,6 @@
 use std::process::Command;
 
-use crate::{data_control::file_reader::FileDataProvider, types::{data_provider::DataProvider, spotify::{self, SpotifyControlKind}}};
+use crate::{data_control::file_reader::FileDataProvider, types::{data_provider::DataProvider, spotify::{SpotifyControlKind, SpotifyKind}}};
 
 #[derive(Clone)]
 pub struct PlayerControl {
@@ -16,9 +16,9 @@ impl PlayerControl {
         let spotify_mapping = spotify_mappings.iter().find(|&mapping| mapping.nfc_index == nfc_index).unwrap();
 
         match spotify_mapping.spotify_kind {
-            spotify::SpotifyKind::Album => self.play_album(&spotify_mapping.spotify_id),
-            spotify::SpotifyKind::Artist => self.play_artist(&spotify_mapping.spotify_id),
-            spotify::SpotifyKind::Playlist => self.play_playlist(&spotify_mapping.spotify_id),
+            SpotifyKind::Album => self.play_album(&spotify_mapping.spotify_id),
+            SpotifyKind::Artist => self.play_artist(&spotify_mapping.spotify_id),
+            SpotifyKind::Playlist => self.play_playlist(&spotify_mapping.spotify_id),
             _ => (),
         }
 
@@ -32,7 +32,6 @@ impl PlayerControl {
             SpotifyControlKind::Shuffle => self.execute_control_command("shuffle".to_string()),
             SpotifyControlKind::VolumeUp => self.volume_up(),
             SpotifyControlKind::VolumeDown => self.volume_down(),
-            _ => (),
         }
     }
 

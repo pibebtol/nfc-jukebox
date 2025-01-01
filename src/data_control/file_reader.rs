@@ -1,4 +1,6 @@
 use std::fs;
+use serde_json::Value;
+
 use crate::types::mappings::{NfcMapping, SpotifyMapping};
 use crate::types::data_provider::DataProvider;
 use crate::env::environment::Environment;
@@ -21,15 +23,15 @@ impl DataProvider for FileDataProvider {
         serde_json::from_str(&result2).expect("should have been valid json")
     }
     
-    fn get_spotify_albums(&self) -> Vec<serde_json::Value> {
+    fn get_spotify_albums(&self) -> Vec<Value> {
         todo!()
     }
     
-    fn get_spotify_artists(&self) -> Vec<serde_json::Value> {
+    fn get_spotify_artists(&self) -> Vec<Value> {
         todo!()
     }
     
-    fn get_spotify_playlists(&self) -> Vec<serde_json::Value> {
+    fn get_spotify_playlists(&self) -> Vec<Value> {
         todo!()
     }
 }
