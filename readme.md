@@ -10,7 +10,7 @@
 
 ### proper
 - [ ] logging
-- [ ] get rid of dotenvy?
+- [x] get rid of dotenvy? - no, it's actually nice, to add environment variables from console
 - [x] get rid of crossterm?
 - [x] control spotify-player
     - [x] volume
