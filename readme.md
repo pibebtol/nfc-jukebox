@@ -19,9 +19,9 @@
     - [x] play random stuff
 - [x] nfc control
 - [x] keyboard input
-- [ ] figure out deployment
+- [x] figure out deployment
   - [x] setup tmux
-  - [ ] figure out how to get keyboard input
+  - [x] figure out how to get keyboard input
 - [ ] general control
   - [x] restart spotify player
   - [ ] check network?
