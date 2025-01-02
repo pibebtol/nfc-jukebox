@@ -53,7 +53,19 @@ spotify_player get key user-followed-artists > spotify_artists.json
 3. fill the `spotify_mappings.json` with your desired album/artist/playlist and assign to the nfc-index
 4. put the app on the respective device.
 
-copy autostart to `/etc`:
+
+### autostart
+**deprecated, use version below** copy autostart to `/etc`:
 ```
 sudo cp scripts/juke-the-box.desktop /etc/xdg/autostart/juke-the-box.desktop
+```
+
+start the pi in headless and start and attach tmux in the login shell (to capture keyboard input):
+```
+if tmux list-session | grep nfc-jukebox; then
+    echo nfc-jukebox is running, not starting
+else
+    echo nfc-jukebox not available, starting
+    ~/workspace/nfc-jukebox/scripts/tmux-setup.sh
+fi
 ```
