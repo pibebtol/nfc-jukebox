@@ -1,4 +1,4 @@
-use crossterm::event::{read, Event, KeyCode, KeyEvent};
+use std::io;
 
 use crate::{spotify_player::player::PlayerControl, types::spotify::SpotifyControlKind};
 pub struct Controller {
@@ -12,30 +12,34 @@ impl Controller {
 
     pub fn listen_for_key_input(&self) {
         loop {
-            if let Event::Key(event) = read().unwrap() {
-                self.handle_key_event(event)
-            }
+            let mut buffer = String::new();
+            let stdin = io::stdin();
+            stdin.read_line(&mut buffer).unwrap();
+            self.handle_key_press(buffer);
         }
     }
 
-    fn handle_key_event(&self, event: KeyEvent) {
-        if let KeyCode::Char(code) = event.code {
-            self.handle_key_press(code)
-        }
-    }
-
-    fn handle_key_press(&self, code: char) {
-        match code {
-            '0' => self.player.control_playback(SpotifyControlKind::VolumeDown),
-            '1' => self.player.control_playback(SpotifyControlKind::VolumeUp),
-            '3' => self.player.control_playback(SpotifyControlKind::RandomAlbum),
-            '4' => self.player.control_playback(SpotifyControlKind::Previous),
-            '5' => self.player.control_playback(SpotifyControlKind::Shuffle),
-            '7' => self.player.control_playback(SpotifyControlKind::RandomArtist),
-            '8' => self.player.control_playback(SpotifyControlKind::PlayPause),
-            'z' => self.player.control_playback(SpotifyControlKind::RandomPlaylist),
-            'ä' => self.player.control_playback(SpotifyControlKind::Next),
-            'e' => self.player.control_playback(SpotifyControlKind::RandomAnything),
+    fn handle_key_press(&self, buffer: String) {
+        println!("buffer: {:?}", buffer);
+        match buffer {
+            x if x.contains('0') => self.player.control_playback(SpotifyControlKind::VolumeDown),
+            x if x.contains('1') => self.player.control_playback(SpotifyControlKind::VolumeUp),
+            x if x.contains('3') => self
+                .player
+                .control_playback(SpotifyControlKind::RandomAlbum),
+            x if x.contains('4') => self.player.control_playback(SpotifyControlKind::Previous),
+            x if x.contains('5') => self.player.control_playback(SpotifyControlKind::Shuffle),
+            x if x.contains('7') => self
+                .player
+                .control_playback(SpotifyControlKind::RandomArtist),
+            x if x.contains('8') => self.player.control_playback(SpotifyControlKind::PlayPause),
+            x if x.contains('z') => self
+                .player
+                .control_playback(SpotifyControlKind::RandomPlaylist),
+            x if x.contains('ä') => self.player.control_playback(SpotifyControlKind::Next),
+            x if x.contains('e') => self
+                .player
+                .control_playback(SpotifyControlKind::RandomAnything),
             _ => (),
         }
     }
