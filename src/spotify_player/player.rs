@@ -50,19 +50,19 @@ impl PlayerControl {
     }
 
     fn play_random_album(&self) {
-        let albums = self.data.get_spotify_albums();
+        let albums = self.data.get_spotify_content(SpotifyKind::Album);
         let random_album = albums.choose(&mut rand::thread_rng()).unwrap();
         self.play_album(&random_album["id"].as_str().unwrap().to_string());
     }
 
     fn play_random_artist(&self) {
-        let artists = self.data.get_spotify_artists();
+        let artists = self.data.get_spotify_content(SpotifyKind::Artist);
         let random_artist = artists.choose(&mut rand::thread_rng()).unwrap();
         self.play_artist(&random_artist["id"].as_str().unwrap().to_string());
     }
 
     fn play_random_playlist(&self) {
-        let playlists = self.data.get_spotify_playlists();
+        let playlists = self.data.get_spotify_content(SpotifyKind::Playlist);
         let random_playlist = playlists.choose(&mut rand::thread_rng()).unwrap();
         self.play_playlist(&random_playlist["id"].as_str().unwrap().to_string());
     }
