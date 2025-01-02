@@ -33,7 +33,8 @@ impl Controller {
                 .player
                 .control_playback(SpotifyControlKind::RandomPlaylist),
             x if x.contains('ä') => self.player.control_playback(SpotifyControlKind::Next),
-            x if x.contains('e') => self
+            x if x.contains('e') => self.player.restart_spotify(),
+            x if x.contains('2') => self
                 .player
                 .control_playback(SpotifyControlKind::RandomAnything),
             _ => (),

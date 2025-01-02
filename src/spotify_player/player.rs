@@ -40,6 +40,17 @@ impl PlayerControl {
         }
     }
 
+    pub fn restart_spotify(&self) {
+        // tmux send-keys -t nfc-jukebox:2 C-c
+        Command::new("tmux")
+            .arg("send-keys")
+            .arg("-t")
+            .arg("nfc-jukebox:2")
+            .arg("C-c")
+            .output()
+            .expect("Failed to execute command");
+    }
+
     fn play_random_anything(&self) {
         let mut rng = rand::thread_rng();
         match rng.gen_range(0..=2) {

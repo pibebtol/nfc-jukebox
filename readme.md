@@ -20,8 +20,10 @@
 - [x] nfc control
 - [x] keyboard input
 - [ ] figure out deployment
+  - [x] setup tmux
+  - [ ] figure out how to get keyboard input
 - [ ] general control
-  - [ ] restart spotify player
+  - [x] restart spotify player
   - [ ] check network?
   - [ ] shut down?
 
@@ -50,3 +52,6 @@ spotify_player get key user-followed-artists > spotify_artists.json
   ```
 3. fill the `spotify_mappings.json` with your desired album/artist/playlist and assign to the nfc-index
 4. put the app on the respective device.
+
+
+copy autostart to `/etc`:`cp juke-the-box.desktop /etc/xdg/autostart/juke-the-box.desktop` 
