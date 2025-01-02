@@ -13,4 +13,3 @@ tmux new-window -t nfc-jukebox:2 -n
 tmux send-keys -t nfc-jukebox:2 '~/workspace/nfc-jukebox/target/release/nfc-jukebox' C-m
 
 echo "[juke-the-box.sh] created new tmux session"
-tmux list-sessions
