@@ -21,7 +21,7 @@ fn main() {
 
     let player = PlayerControl{data};
 
-    let controller = Controller::new(player.clone());
+    let controller = Controller { player: player.clone() };
     let keyboard_thread = thread::spawn(move || {
         controller.listen_for_key_input();
     });

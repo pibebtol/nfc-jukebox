@@ -13,6 +13,7 @@ impl Reader {
     pub fn listen_for_nfc_tags(&self) {
         loop {
             // wraps nfc-poll into stdbuf, to get the buffer output instantly
+            // (else it waits for process finish, which only happens on nfc-tag-removal)
             let mut child = Command::new("stdbuf")
                 .arg("-oL")
                 .arg("nfc-poll")
@@ -27,9 +28,8 @@ impl Reader {
                 match line {
                     Ok(line) => {
                         if line.contains("NFCID1") {
-                            // only take the nfc-id
-                            let nfc_id = &line[21..47];
-                            self.player.play(nfc_id);
+                            // only take the nfc-id from the line
+                            self.player.play(&line[21..47]);
                         }
                     }
                     Err(e) => {

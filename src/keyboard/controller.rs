@@ -2,14 +2,10 @@ use std::io;
 
 use crate::{spotify_player::player::PlayerControl, types::spotify::SpotifyControlKind};
 pub struct Controller {
-    player: PlayerControl,
+    pub player: PlayerControl,
 }
 
 impl Controller {
-    pub fn new(player: PlayerControl) -> Controller {
-        Controller { player }
-    }
-
     pub fn listen_for_key_input(&self) {
         loop {
             let mut buffer = String::new();
